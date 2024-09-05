@@ -8,8 +8,8 @@ function Notification(props){
     return (<div>
         <Avatar />
         <Name name={props.report.name} />
-        <Message />
-        <Timestamp />
+        <Message type={props.report.desc} location={props.report.namedloc} />
+        <Timestamp date={props.report.reported_on} />
     </div>);
 }
 
