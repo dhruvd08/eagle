@@ -3,22 +3,35 @@ import Header from "./components/Header";
 import Notification from "./components/Notification";
 import Map from "./components/Map";
 import React, { useEffect, useState } from "react";
+import Avatar from "./components/Avatar";
 
 function App() {
   const [incidents, setIncidents] = useState([]);
 
-  useEffect(() => {
+  const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
-    const fetchData = async () => {
-      const baseUrl = "https://mseb-incident.onrender.com/";
+  const source = new EventSource(`${baseUrl}/incidents/subscribe`);
 
-      const result = await fetch(baseUrl);
-      const allIncidents = await result.json();
-      console.log(allIncidents);
-      
-      setIncidents(allIncidents);
+  source.addEventListener("message", async (e) => {
+    console.log(`Data is ${e.data}`);
+    if (Boolean(e.data)) {
+      await getData();
     }
-    
+  });
+
+  async function getData() {
+    const result = await fetch(baseUrl + "/incidents");
+    const allIncidents = await result.json();
+    console.log(allIncidents);
+
+    setIncidents(allIncidents);
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getData();
+    };
+
     fetchData();
   }, []);
 
@@ -30,7 +43,12 @@ function App() {
         {/* <Feed incidents={incidents} /> */}
         <div className="feed">
           {incidents.map((incident) => {
-            return <Notification key={incident.id} report={incident} />;
+            return (
+              <div className="msg-with-avatar" >
+                <Avatar name={incident.name}  />
+                <Notification key={incident.id} report={incident} />
+              </div>
+            );
           })}
         </div>
       </div>

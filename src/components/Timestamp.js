@@ -1,7 +1,8 @@
 import React from "react";
+import '../App.css';
 
 function Timestamp(props){
-    return (<p className="timestamp">{new Date(props.date).toLocaleDateString("in")}, {new Date(props.date).toLocaleTimeString()}</p>);
+    return (<p className="timestamp">{`${new Date(props.date).getHours()}:${new Date(props.date).getMinutes()}`}</p>);
 }
 
 export default Timestamp;
