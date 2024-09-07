@@ -10,7 +10,7 @@ function App() {
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
-  const source = new EventSource(`${baseUrl}/incidents/subscribe`);
+  const source = new EventSource(`${baseUrl}/subscribe`);
 
   source.addEventListener("message", async (e) => {
     console.log(`Data is ${e.data}`);
