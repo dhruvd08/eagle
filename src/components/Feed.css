@@ -1,0 +1,30 @@
+.time {
+    text-align: right;
+    margin: 0px;
+    margin-top: 2px;
+}
+
+.date {
+    text-align: center;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    opacity: 75%;
+}
+
+.desc {
+    display: inline;
+    border-radius: 3px;
+    padding: 3px 5px;
+}
+
+.Dim-supply {
+    background-color: #EEC759;
+}
+
+.Full-supply {
+    background-color: #88AB8E;
+}
+
+.Power-failure {
+    background-color: #FF8A8A;
+}
