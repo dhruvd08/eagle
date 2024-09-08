@@ -10,10 +10,11 @@ function App() {
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
-  const source = new EventSource(`${baseUrl}/subscribe`);
+  const eventSourceInitDict = {headers: {mode: "cores"}};
+  const source = new EventSource(`${baseUrl}/subscribe`, eventSourceInitDict);
 
   source.addEventListener("message", async (e) => {
-    console.log(`Data is ${e.data}`);
+    console.log(`Data is ${e.data}; Id is ${e.lastEventId}; Event is ${e.type}`);
     if (Boolean(e.data)) {
       await getData();
     }
