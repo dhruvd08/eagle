@@ -10,15 +10,23 @@ function App() {
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
-  const eventSourceInitDict = {headers: {mode: "no-cors"}};
-  const source = new EventSource(`${baseUrl}/subscribe`, eventSourceInitDict);
+  useEffect(() => {
+    const source = new EventSource(`${baseUrl}/subscribe`, {withCredentials: false});
 
-  source.addEventListener("message", async (e) => {
-    console.log(`Data is ${e.data}; Id is ${e.lastEventId}; Event is ${e.type}`);
-    if (Boolean(e.data)) {
-      await getData();
-    }
-  });
+    source.onopen = function() {
+
+    };
+
+    source.onmessage = async (e) => {
+      if (Boolean(e.data)) {
+        await getData();
+      }
+    };
+
+    source.onerror = (err) => {
+      console.log(err);
+    };
+  }, []);
 
   async function getData() {
     const result = await fetch(baseUrl + "/incidents");
