@@ -10,7 +10,7 @@ function App() {
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
-  const eventSourceInitDict = {headers: {mode: "cores"}};
+  const eventSourceInitDict = {headers: {mode: "no-cors"}};
   const source = new EventSource(`${baseUrl}/subscribe`, eventSourceInitDict);
 
   source.addEventListener("message", async (e) => {
