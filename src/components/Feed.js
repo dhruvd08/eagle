@@ -21,6 +21,32 @@ export default function Feed(props) {
 
   let dates = [];
 
+  function isToday(date) {
+    return (
+      `${date.getFullYear()}${date.getMonth()}${date.getDate()}` ===
+      `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`
+    );
+  }
+
+  function isYesterday(date) {
+    return (
+      `${date.getFullYear()}${date.getMonth()}${date.getDate()}` ===
+      `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate() - 1}`
+    );
+  }
+
+  function getDate(incidentDate) {
+    const dateIncident = new Date(incidentDate);
+
+    return !dates.includes(dateIncident.toLocaleDateString())
+      ? isToday(dateIncident)
+        ? "Today"
+        : isYesterday(dateIncident)
+          ? "Yesterday"
+          : `${dateIncident.toLocaleString("in", { month: "long" })} ${dateIncident.getDate()}, ${dateIncident.getFullYear()}`
+      : "";
+  }
+
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {props.incidents.map((incident) => {
@@ -31,12 +57,7 @@ export default function Feed(props) {
               variant="body2"
               sx={{ color: "text.primary", display: "inline" }}
             >
-              <p className="date">
-                {!dates.includes(
-                  new Date(incident.reported_on).toLocaleDateString()
-                ) &&
-                  `${new Date(incident.reported_on).getFullYear()}${new Date(incident.reported_on).getMonth()}${new Date(incident.reported_on).getDate()}` === `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}` ? "Today" : `${new Date(incident.reported_on).toLocaleString("in", { month: "long" })} ${new Date(incident.reported_on).getDate()}, ${new Date(incident.reported_on).getFullYear()}`}
-              </p>
+              <p className="date">{getDate(incident.reported_on)}</p>
             </Typography>
             <p hidden>
               {dates.push(new Date(incident.reported_on).toLocaleDateString())}
