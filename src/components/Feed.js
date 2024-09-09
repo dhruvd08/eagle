@@ -35,15 +35,11 @@ export default function Feed(props) {
                 {!dates.includes(
                   new Date(incident.reported_on).toLocaleDateString()
                 ) &&
-                  `${new Date(incident.reported_on).toLocaleString("in", { month: "long" })} ${new Date(incident.reported_on).getDate()}, ${new Date(incident.reported_on).getFullYear()}`}
+                  `${new Date(incident.reported_on).getFullYear()}${new Date(incident.reported_on).getMonth()}${new Date(incident.reported_on).getDate()}` === `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}` ? "Today" : `${new Date(incident.reported_on).toLocaleString("in", { month: "long" })} ${new Date(incident.reported_on).getDate()}, ${new Date(incident.reported_on).getFullYear()}`}
               </p>
             </Typography>
             <p hidden>
-              {
-                (dates.push(
-                  new Date(incident.reported_on).toLocaleDateString()
-                ))
-              }
+              {dates.push(new Date(incident.reported_on).toLocaleDateString())}
             </p>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
