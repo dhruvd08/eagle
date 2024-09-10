@@ -9,14 +9,16 @@ import InfoIcon from "@mui/icons-material/Info";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import ChatIcon from "@mui/icons-material/Chat";
 
+import { CircularProgress, Box } from "@mui/material";
+
 import Feed from "./components/Feed";
 import Imap from "./components/Imap";
-
 
 import { APIProvider } from "@vis.gl/react-google-maps";
 
 function App(props) {
   const [incidents, setIncidents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -31,15 +33,10 @@ function App(props) {
     };
 
     source.onmessage = async (e) => {
-      
-      
       if (JSON.parse(e.data).id) {
         console.log(
           `Data is ${e.data}; Id is ${e.lastEventId}; Event is ${e.type}`
         );
-        // setIncidents((prevValues) => {
-        //   return [...prevValues, JSON.parse(e.data)]
-        // });
         await getData();
       }
     };
@@ -50,11 +47,18 @@ function App(props) {
   }, []);
 
   async function getData() {
-    const result = await fetch(baseUrl + "/incidents");
-    const allIncidents = await result.json();
-    console.log(allIncidents);
-
-    setIncidents(allIncidents);
+    setIsLoading(true);
+    try {
+      const result = await fetch(baseUrl + "/incidents");
+      const allIncidents = await result.json();
+      console.log(allIncidents);
+      setIncidents(allIncidents);
+    } catch (err) {
+      // TODO Show /error
+      //console.log("error fetch incidents...");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -133,20 +137,27 @@ function App(props) {
 
   return (
     // preview-start
-    <AppProvider
-      navigation={NAVIGATION}
-      branding={{
-        logo: <img src="./elogo.png" alt="EAGLE logo" />,
-        title: "EAGLE",
-      }}
-      router={router}
-      theme={demoTheme}
-    >
-      <DashboardLayout>
-        <DemoPageContent pathname={pathname} />
-      </DashboardLayout>
-    </AppProvider>
-
+    <div>
+      {isLoading ? (
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <AppProvider
+          navigation={NAVIGATION}
+          branding={{
+            logo: <img src="./elogo.png" alt="EAGLE logo" />,
+            title: "EAGLE",
+          }}
+          router={router}
+          theme={demoTheme}
+        >
+          <DashboardLayout>
+            <DemoPageContent pathname={pathname} />
+          </DashboardLayout>
+        </AppProvider>
+      )}
+    </div>
     // preview-end
   );
 }
