@@ -76,20 +76,20 @@ export default function Feed(props) {
                       variant="body2"
                       sx={{ color: "text.primary", display: "inline" }}
                     >
-                      <div
+                      <p
                         className={incident.desc.replace(" ", "-") + " desc"}
                       >
                         {incident.desc}
-                      </div>{" "}
+                      </p>{" "}
                       in{" "}
-                      <div
+                      <p
                         style={{
                           backgroundColor: stringToColor(incident.namedloc),
                         }}
                         className="desc"
                       >
                         {incident.namedloc}
-                      </div>
+                      </p>
                     </Typography>
                     <br />
                     <p className="time">

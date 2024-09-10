@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
-import PropTypes from 'prop-types';
-import { createTheme } from '@mui/material/styles';
+import PropTypes from "prop-types";
+import { createTheme } from "@mui/material/styles";
 
 import MapIcon from "@mui/icons-material/Map";
 import InfoIcon from "@mui/icons-material/Info";
-import BarChartIcon from '@mui/icons-material/BarChart';
-import ChatIcon from '@mui/icons-material/Chat';
+import BarChartIcon from "@mui/icons-material/BarChart";
+import ChatIcon from "@mui/icons-material/Chat";
 
 import Feed from "./components/Feed";
+import Imap from "./components/Imap";
 
+
+import { APIProvider } from "@vis.gl/react-google-maps";
 
 function App(props) {
   const [incidents, setIncidents] = useState([]);
@@ -28,10 +31,14 @@ function App(props) {
     };
 
     source.onmessage = async (e) => {
-      console.log(
-        `Data is ${e.data}; Id is ${e.lastEventId}; Event is ${e.type}`
-      );
-      if (Boolean(e.data)) {
+      // console.log(
+      //   `Data is ${e.data}; Id is ${e.lastEventId}; Event is ${e.type}`
+      // );
+      
+      if (JSON.parse(e.data).id) {
+        // setIncidents((prevValues) => {
+        //   return [...prevValues, JSON.parse(e.data)]
+        // });
         await getData();
       }
     };
@@ -80,8 +87,6 @@ function App(props) {
     },
   ];
 
-  const { window } = props;
-
   const [pathname, setPathname] = React.useState("/dashboard");
 
   const router = React.useMemo(() => {
@@ -110,11 +115,17 @@ function App(props) {
 
   function DemoPageContent({ pathname }) {
     console.log(pathname);
-    return (
-      pathname === "/feed" ? <Feed incidents={incidents} /> : null
-    );
+    return pathname === "/feed" ? (
+      <Feed incidents={incidents} />
+    ) : pathname === "/map" ? (
+      <div className="app">
+        <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_APIKEY}>
+          <Imap incidents={incidents} />
+        </APIProvider>
+      </div>
+    ) : null;
   }
-  
+
   DemoPageContent.propTypes = {
     pathname: PropTypes.string.isRequired,
   };
@@ -125,16 +136,16 @@ function App(props) {
       navigation={NAVIGATION}
       branding={{
         logo: <img src="./elogo.png" alt="EAGLE logo" />,
-        title: 'EAGLE',
+        title: "EAGLE",
       }}
       router={router}
       theme={demoTheme}
-
     >
       <DashboardLayout>
         <DemoPageContent pathname={pathname} />
       </DashboardLayout>
     </AppProvider>
+
     // preview-end
   );
 }
