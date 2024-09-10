@@ -31,11 +31,12 @@ function App(props) {
     };
 
     source.onmessage = async (e) => {
-      // console.log(
-      //   `Data is ${e.data}; Id is ${e.lastEventId}; Event is ${e.type}`
-      // );
+      
       
       if (JSON.parse(e.data).id) {
+        console.log(
+          `Data is ${e.data}; Id is ${e.lastEventId}; Event is ${e.type}`
+        );
         // setIncidents((prevValues) => {
         //   return [...prevValues, JSON.parse(e.data)]
         // });
