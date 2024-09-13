@@ -139,7 +139,7 @@ function App(props) {
     // preview-start
     <div>
       {isLoading ? (
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", height:"100vh" }}>
           <CircularProgress />
         </Box>
       ) : (
