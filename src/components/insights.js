@@ -5,7 +5,7 @@ import "./Insights.css";
 import InsightsDetails from "./InsightsDetails";
 
 export default function Insights(props) {
-  const baseUrl = "https://mseb-incident.onrender.com";//process.env.REACT_APP_BACKEND_URL;
+  const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
   const [selectedVillage, setSelectedVillage] = useState(props.villages.length > 0 ? props.villages[0] : '');
   const [noOfIncidents, setNoOfIncidents] = useState(0);
