@@ -31,6 +31,7 @@ export default function Insights(props) {
     try {
       const result = await fetch(baseUrl + `/incidentcount?village=${village}`);
       count = (await result.json()).count;
+      console.log(`incident count for ${village} is ${count}`);
     } catch (err) {
       // TODO Show /error
       //console.log("error fetch incidents...");
@@ -63,6 +64,7 @@ export default function Insights(props) {
     try {
       result = await fetch(baseUrl + `/resolutiontime?village=${village}`);
       result = (await result.json()).averageResolutionTime_inMins;
+      console.log(`resolution time for ${village} is ${result}`);
       if (result) {
         result = Math.round(result);
       } else {
