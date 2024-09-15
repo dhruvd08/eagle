@@ -2,3 +2,7 @@
     display: flex;
     height: 90vh;
 }
+
+.info-content {
+    color: black !important;
+}

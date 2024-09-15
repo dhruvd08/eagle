@@ -13,11 +13,13 @@ import { CircularProgress, Box } from "@mui/material";
 
 import Feed from "./components/Feed";
 import Imap from "./components/Imap";
+import Insights from "./components/insights";
 
 import { APIProvider } from "@vis.gl/react-google-maps";
 
 function App(props) {
   const [incidents, setIncidents] = useState([]);
+  const [villages, setVillages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const baseUrl = process.env.REACT_APP_BACKEND_URL;
@@ -26,17 +28,17 @@ function App(props) {
     const source = new EventSource(`${baseUrl}/subscribe`, {
       withCredentials: false,
     });
-    console.log(`Connection status ${source.readyState}`);
+    // console.log(`Connection status ${source.readyState}`);
 
     source.onopen = function () {
-      console.log("Connection to server opened.");
+      // console.log("Connection to server opened.");
     };
 
     source.onmessage = async (e) => {
       if (JSON.parse(e.data).id) {
-        console.log(
-          `Data is ${e.data}; Id is ${e.lastEventId}; Event is ${e.type}`
-        );
+        // console.log(
+        //   `Data is ${e.data}; Id is ${e.lastEventId}; Event is ${e.type}`
+        // );
         await getData();
       }
     };
@@ -51,7 +53,7 @@ function App(props) {
     try {
       const result = await fetch(baseUrl + "/incidents");
       const allIncidents = await result.json();
-      console.log(allIncidents);
+      // console.log(allIncidents);
       setIncidents(allIncidents);
     } catch (err) {
       // TODO Show /error
@@ -59,6 +61,21 @@ function App(props) {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  async function getVillages() {
+    setIsLoading(true);
+    try {
+      const result = await fetch(baseUrl + "/villages");
+      const allVillages = await result.json();
+      setVillages(allVillages);
+    } catch (err) {
+      // TODO Show /error
+      //console.log("error fetch incidents...");
+    } finally {
+      setIsLoading(false);
+    }
+    
   }
 
   useEffect(() => {
@@ -69,6 +86,15 @@ function App(props) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchVillages = async () => {
+      await getVillages();
+    };
+
+    fetchVillages();
+
+  }, []);
+
   const NAVIGATION = [
     {
       segment: "map",
@@ -77,7 +103,7 @@ function App(props) {
     },
     {
       segment: "feed",
-      title: "Live Feed",
+      title: "Incidents",
       icon: <ChatIcon />,
     },
     {
@@ -85,14 +111,14 @@ function App(props) {
       title: "Insights",
       icon: <BarChartIcon />,
     },
-    {
-      segment: "about",
-      title: "About",
-      icon: <InfoIcon />,
-    },
+    // {
+    //   segment: "about",
+    //   title: "About",
+    //   icon: <InfoIcon />,
+    // },
   ];
 
-  const [pathname, setPathname] = React.useState("/dashboard");
+  const [pathname, setPathname] = React.useState("/feed");
 
   const router = React.useMemo(() => {
     return {
@@ -119,7 +145,7 @@ function App(props) {
   });
 
   function DemoPageContent({ pathname }) {
-    console.log(pathname);
+    // console.log(pathname);
     return pathname === "/feed" ? (
       <Feed incidents={incidents} />
     ) : pathname === "/map" ? (
@@ -128,7 +154,7 @@ function App(props) {
           <Imap incidents={incidents} />
         </APIProvider>
       </div>
-    ) : null;
+    ) : pathname === "/insights" ? (<Insights villages={villages}/>) : null;
   }
 
   DemoPageContent.propTypes = {

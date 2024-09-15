@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import React from "react";
 import {
   AdvancedMarker,
@@ -7,7 +7,6 @@ import {
   InfoWindow,
   useMap,
 } from "@vis.gl/react-google-maps";
-import { MarkerClusterer, Marker } from "@googlemaps/markerclusterer";
 
 import "./Imap.css";
 
@@ -18,7 +17,7 @@ export default function Imap(props) {
 
     const handleMarkerClick = (marker) => {
       if (!map) return;
-      console.log(`Active marker id ${marker}`);
+      // console.log(`Active marker id ${marker}`);
       if (marker === activeMarker) {
         return;
       }
@@ -47,12 +46,12 @@ export default function Imap(props) {
                 onCloseClick={() => setActiveMarker(null)}
                 position={{ lat: incident.meter_lat, lng: incident.meter_lng }}
                 headerContent={
-                  <h6>
+                  <h6 className="info-content" >
                     {incident.desc} in {incident.namedloc}
                   </h6>
                 }
               >
-                <p>
+                <p className="info-content" >
                   Reported on{" "}
                   {new Date(incident.reported_on).toLocaleDateString("in") +
                     ", " +

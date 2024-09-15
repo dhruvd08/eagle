@@ -1,0 +1,60 @@
+.center-align {
+    text-align: center;
+    font-size: xx-large;
+    color: white;
+    margin: 0px;
+}
+
+.insight-container {
+    width: 90%;
+    margin-top: 0.5rem;
+    margin-left: 5%;
+}
+
+.insight {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.ball-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.box {
+    align-self: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    height: 20vh;
+    width: 20vh;
+    border-radius: 50%;
+}
+
+.yellow {
+    background-color: #EEC759;
+}
+
+.green {
+    background-color: #88AB8E;
+}
+
+.red {
+    background-color: #FF8A8A;
+}
+
+.box:hover {
+    opacity: 70%;
+}
+
+@media (max-width: 1000px) {
+    .ball-container {
+        display: block;
+    }
+}

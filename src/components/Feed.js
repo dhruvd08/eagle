@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
@@ -11,14 +11,6 @@ import "./Feed.css";
 import Typography from "@mui/material/Typography";
 
 export default function Feed(props) {
-  //   const [dates, setDates] = React.useState([]);
-
-  //     function addDate (time) {
-  //         setDates((prevValues) => {
-  //             return [...prevValues, time];
-  //         })
-  //     }
-
   let dates = [];
 
   function isToday(date) {
@@ -51,7 +43,7 @@ export default function Feed(props) {
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       {props.incidents.map((incident) => {
         return (
-          <div>
+          <div key={incident.id} >
             <Typography
               component="span"
               variant="body2"
