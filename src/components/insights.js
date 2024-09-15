@@ -119,17 +119,27 @@ export default function Insights(props) {
           />
           <InsightsDetails
             insightValue={Math.round(upTime)}
-            bgcolor={upTime > 90 ? "green" : upTime > 80 ? "yellow" : "red"}
+            bgcolor={
+              upTime === "NA"
+                ? "green"
+                : upTime > 90
+                  ? "green"
+                  : upTime > 80
+                    ? "yellow"
+                    : "red"
+            }
             title="Supply Availability (%)"
           />
           <InsightsDetails
             insightValue={Math.round(resolutionTime)}
             bgcolor={
-              resolutionTime < 30
+              resolutionTime === "NA"
                 ? "green"
-                : resolutionTime < 120
-                  ? "yellow"
-                  : "red"
+                : resolutionTime < 30
+                  ? "green"
+                  : resolutionTime < 120
+                    ? "yellow"
+                    : "red"
             }
             title="Average Resolution Time (mins)"
           />
