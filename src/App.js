@@ -22,7 +22,7 @@ function App(props) {
   const [villages, setVillages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const baseUrl = process.env.REACT_APP_BACKEND_URL;
+  const baseUrl = "https://mseb-incident.onrender.com"//;process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
     const source = new EventSource(`${baseUrl}/subscribe`, {

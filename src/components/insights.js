@@ -5,9 +5,9 @@ import "./Insights.css";
 import InsightsDetails from "./InsightsDetails";
 
 export default function Insights(props) {
-  const baseUrl = process.env.REACT_APP_BACKEND_URL;
+  const baseUrl = "https://mseb-incident.onrender.com";//process.env.REACT_APP_BACKEND_URL;
 
-  const [selectedVillage, setSelectedVillage] = useState(props.villages.length > 0 && props.villages[0]);
+  const [selectedVillage, setSelectedVillage] = useState(props.villages.length > 0 ? props.villages[0] : '');
   const [noOfIncidents, setNoOfIncidents] = useState(0);
   const [upTime, setUpTime] = useState(0);
   const [resolutionTime, setResolutionTime] = useState(0);
@@ -41,6 +41,7 @@ export default function Insights(props) {
     try {
       result = await fetch(baseUrl + `/uptime?village=${village}`);
       result = (await result.json()).upTime_inPerc;
+      console.log(`uptime for ${village} is ${result}`);
       return Math.round(result);
     } catch (err) {
       // TODO Show /error
