@@ -46,7 +46,11 @@ export default function Insights(props) {
       result = await fetch(baseUrl + `/uptime?village=${village}`);
       result = (await result.json()).upTime_inPerc;
       console.log(`uptime for ${village} is ${result}`);
+      if (result){
       return Math.round(result);
+      } else {
+        return "NA";
+      }
     } catch (err) {
       // TODO Show /error
       //console.log("error fetch incidents...");
