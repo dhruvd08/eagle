@@ -64,7 +64,11 @@ export default function Insights(props) {
     try {
       result = await fetch(baseUrl + `/resolutiontime?village=${village}`);
       result = (await result.json()).averageResolutionTime_inMins;
-      return Math.round(result);
+      if (result === NaN) {
+        return Math.round(result);
+      } else {
+        return "NA";
+      }
     } catch (err) {
       // TODO Show /error
       //console.log("error fetch incidents...");
