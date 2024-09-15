@@ -7,16 +7,20 @@ import InsightsDetails from "./InsightsDetails";
 export default function Insights(props) {
   const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
-  const [selectedVillage, setSelectedVillage] = useState(props.villages.length > 0 ? props.villages[0] : '');
+  const [selectedVillage, setSelectedVillage] = useState(
+    props.villages.length > 0 ? props.villages[0] : ""
+  );
   const [noOfIncidents, setNoOfIncidents] = useState(0);
   const [upTime, setUpTime] = useState(0);
   const [resolutionTime, setResolutionTime] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
-      await getNoOfIncidents(selectedVillage);
-      await getUpTime(selectedVillage);
-      await getResolutionTime(selectedVillage);
+      if (selectedVillage !== "") {
+        await getNoOfIncidents(selectedVillage);
+        await getUpTime(selectedVillage);
+        await getResolutionTime(selectedVillage);
+      }
     };
 
     fetchData();
@@ -93,10 +97,17 @@ export default function Insights(props) {
           })}
         </Select>
       </FormControl>
-      {selectedVillage !== "" && <div className="ball-container" >
+      {selectedVillage !== "" && (
+        <div className="ball-container">
           <InsightsDetails
             insightValue={Math.round(noOfIncidents)}
-            bgcolor={noOfIncidents === 0 ? "green" : noOfIncidents < 3 ? "yellow" : "red"}
+            bgcolor={
+              noOfIncidents === 0
+                ? "green"
+                : noOfIncidents < 3
+                  ? "yellow"
+                  : "red"
+            }
             title="Number of Incidents"
           />
           <InsightsDetails
@@ -106,10 +117,17 @@ export default function Insights(props) {
           />
           <InsightsDetails
             insightValue={Math.round(resolutionTime)}
-            bgcolor={resolutionTime < 30 ? "green" : resolutionTime < 120 ? "yellow" : "red"}
+            bgcolor={
+              resolutionTime < 30
+                ? "green"
+                : resolutionTime < 120
+                  ? "yellow"
+                  : "red"
+            }
             title="Average Resolution Time (mins)"
           />
-      </div>}
+        </div>
+      )}
     </div>
   );
 }
