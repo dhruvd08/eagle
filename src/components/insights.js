@@ -31,12 +31,12 @@ export default function Insights(props) {
     try {
       const result = await fetch(baseUrl + `/incidentcount?village=${village}`);
       count = (await result.json()).count;
-      return count;
+      return Number(count);
     } catch (err) {
       // TODO Show /error
       //console.log("error fetch incidents...");
     } finally {
-      setNoOfIncidents(count);
+      setNoOfIncidents(Number(count));
     }
   }
 
