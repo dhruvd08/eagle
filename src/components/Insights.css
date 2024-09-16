@@ -5,6 +5,10 @@
     margin: 0px;
 }
 
+.small {
+    font-size:medium;
+}
+
 .insight-container {
     width: 90%;
     margin-top: 0.5rem;

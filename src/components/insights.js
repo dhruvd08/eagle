@@ -89,6 +89,13 @@ export default function Insights(props) {
     setResolutionTime(await getResolutionTime(village));
   };
 
+  function getMonthName(month){
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    return monthNames[month];    
+  }
+
   return (
     <div className="insight-container">
       <FormControl fullWidth size="small" margin="dense">
@@ -111,6 +118,7 @@ export default function Insights(props) {
       </FormControl>
       {selectedVillage !== "" && (
         <div className="ball-container">
+          <p>For {getMonthName(new Date().getMonth())}, {new Date().getFullYear()}</p>
           <InsightsDetails
             insightValue={Math.round(noOfIncidents)}
             bgcolor={
@@ -123,7 +131,7 @@ export default function Insights(props) {
             title="Number of Incidents"
           />
           <InsightsDetails
-            insightValue={Math.round(upTime)}
+            insightValue={Math.round(upTime) + "%"}
             bgcolor={
               upTime === "NA"
                 ? "green"
@@ -133,10 +141,11 @@ export default function Insights(props) {
                     ? "yellow"
                     : "red"
             }
-            title="Supply Availability (%)"
+            title="Supply Availability"
           />
           <InsightsDetails
             insightValue={Math.round(resolutionTime)}
+            unit="mins"
             bgcolor={
               resolutionTime === "NA"
                 ? "green"
@@ -146,7 +155,7 @@ export default function Insights(props) {
                     ? "yellow"
                     : "red"
             }
-            title="Average Resolution Time (mins)"
+            title="Average Resolution Time"
           />
         </div>
       )}

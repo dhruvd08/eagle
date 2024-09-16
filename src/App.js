@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { createTheme } from "@mui/material/styles";
 
 import MapIcon from "@mui/icons-material/Map";
-import InfoIcon from "@mui/icons-material/Info";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import ChatIcon from "@mui/icons-material/Chat";
 
@@ -180,7 +179,7 @@ function App(props) {
         >
           <DashboardLayout>
             <DemoPageContent pathname={pathname} />
-          </DashboardLayout>
+          </DashboardLayout>          
         </AppProvider>
       )}
     </div>
