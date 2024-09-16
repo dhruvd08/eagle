@@ -38,6 +38,7 @@ export default function Insights(props) {
     } finally {
       setNoOfIncidents(Number(count));
     }
+    return count;
   }
 
   async function getUpTime(village) {
@@ -51,6 +52,7 @@ export default function Insights(props) {
       } else {
         result = "NA";
       }
+      return result;
     } catch (err) {
       // TODO Show /error
       //console.log("error fetch incidents...");
@@ -70,6 +72,7 @@ export default function Insights(props) {
       } else {
         result = "NA";
       }
+      return result;
     } catch (err) {
       // TODO Show /error
       //console.log("error fetch incidents...");
