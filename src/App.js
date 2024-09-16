@@ -107,7 +107,7 @@ function App(props) {
     },
     {
       segment: "insights",
-      title: "Insights",
+      title: <span>Insights<sup>BETA</sup></span>,
       icon: <BarChartIcon />,
     },
     // {
