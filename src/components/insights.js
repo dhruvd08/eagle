@@ -65,7 +65,7 @@ export default function Insights(props) {
       result = await fetch(baseUrl + `/resolutiontime?village=${village}`);
       result = (await result.json()).averageResolutionTime_inMins;
       console.log(`resolution time for ${village} is ${result}`);
-      if (result) {
+      if (result !== null) {
         result = Math.round(result);
       } else {
         result = "NA";
