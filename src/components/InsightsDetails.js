@@ -2,6 +2,7 @@ import * as React from "react";
 import "./Insights.css";
 
 export default function InsightsDetails(props) {
+  console.log(props);
   return (
     <div className="insight" >
       <p className="title">{props.title}</p>
