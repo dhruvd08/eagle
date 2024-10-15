@@ -1,6 +1,8 @@
 {
   "short_name": "Eagle",
   "name": "Eagle",
+  "display": "standalone",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "favicon.ico",

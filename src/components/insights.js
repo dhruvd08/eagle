@@ -122,9 +122,9 @@ export default function Insights(props) {
           <InsightsDetails
             insightValue={Math.round(noOfIncidents)}
             bgcolor={
-              noOfIncidents === 0
+              noOfIncidents < 5
                 ? "green"
-                : noOfIncidents < 3
+                : noOfIncidents < 10
                   ? "yellow"
                   : "red"
             }
@@ -135,9 +135,9 @@ export default function Insights(props) {
             bgcolor={
               upTime === "NA"
                 ? "green"
-                : upTime > 90
+                : upTime > 95
                   ? "green"
-                  : upTime > 80
+                  : upTime > 90
                     ? "yellow"
                     : "red"
             }
